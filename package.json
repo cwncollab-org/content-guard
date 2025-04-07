@@ -1,6 +1,6 @@
 {
   "name": "@cwncollab-org/content-guard",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
