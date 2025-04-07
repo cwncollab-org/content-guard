@@ -21,7 +21,7 @@ import {
 type Props = PropsWithChildren & {};
 
 export function ContentGuardProvider({ children }: Props) {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLElement>(document.body);
 
   const [hasFocus, setHasFocus] = useState(document.hasFocus());
   const [windowState, setWindowState] = useState<WindowState | null>(null);
@@ -293,7 +293,7 @@ export function ContentGuardProvider({ children }: Props) {
         },
       }}
     >
-      <div ref={ref}>{children}</div>
+      {children}
     </contentGuardContext.Provider>
   );
 }
