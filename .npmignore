@@ -1,0 +1,29 @@
+# Source files
+src/
+!src/lib/
+
+# Configuration files
+.eslintrc
+.eslintignore
+.prettierrc
+.prettierignore
+tsconfig.json
+tsconfig.app.json
+tsconfig.node.json
+vite.config.ts
+
+# Development files
+.github/
+.vscode/
+public/
+index.html
+Dockerfile.dev-cloud
+nginx.conf
+
+# Git files
+.git/
+.gitignore
+
+# Build files
+node_modules/
+dist/ 
