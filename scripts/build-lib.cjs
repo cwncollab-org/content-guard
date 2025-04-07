@@ -34,4 +34,15 @@ exports.useContentGuard = index_1.useContentGuard;
 fs.writeFileSync(path.join("dist", "index.js"), cjsEntry);
 console.log("CommonJS entry point created!");
 
+// Create ESM entry point
+console.log("Creating ESM entry point...");
+const esmEntry = `
+export { ContentGuard } from './index.js';
+export { ContentGuardProvider } from './index.js';
+export { useContentGuard } from './index.js';
+`;
+
+fs.writeFileSync(path.join("dist", "index.mjs"), esmEntry);
+console.log("ESM entry point created!");
+
 console.log("Build completed successfully!");

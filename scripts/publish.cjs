@@ -31,7 +31,18 @@ if (!version) {
 // Update version in package.json
 console.log(`Updating version to ${version}...`);
 try {
-  execSync(`npm version ${version} --no-git-tag-version`, { stdio: "inherit" });
+  // Read the current package.json
+  const packageJsonPath = path.join(process.cwd(), "package.json");
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
+
+  // Update the version
+  packageJson.version = version;
+
+  // Write the updated package.json
+  fs.writeFileSync(
+    packageJsonPath,
+    JSON.stringify(packageJson, null, 2) + "\n"
+  );
   console.log("Version updated successfully!");
 } catch (error) {
   console.error("Error updating version:", error);
