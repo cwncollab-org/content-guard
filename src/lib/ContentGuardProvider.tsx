@@ -29,7 +29,7 @@ export function ContentGuardProvider({ children }: Props) {
   const [eventHistory, { push: pushBrowserEvent }] = useList<BrowserEvent>();
 
   const requestFullscreen = useCallback(() => {
-    ref.current?.requestFullscreen();
+    return ref.current?.requestFullscreen();
   }, []);
 
   const isFullscreen =

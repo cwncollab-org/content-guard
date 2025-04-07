@@ -1,7 +1,7 @@
 import { createContext, RefObject } from "react";
 
 export type ContentGuardContext = {
-  requestFullscreen: () => void;
+  requestFullscreen: () => Promise<void>;
   isFullscreen: boolean;
   shouldHideContent: boolean;
   rootRef: RefObject<HTMLElement | null>;
