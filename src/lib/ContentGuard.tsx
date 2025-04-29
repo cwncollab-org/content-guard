@@ -7,7 +7,8 @@ type Props = PropsWithChildren & {
   style?: React.CSSProperties;
 };
 
-export function ContentGuard({ replacement, children, style }: Props) {
+export function ContentGuard(props: Props) {
+  const { replacement, children, style } = props;
   const { shouldHideContent } = useContentGuard();
 
   const ref = useRef<HTMLDivElement>(null);
@@ -21,7 +22,7 @@ export function ContentGuard({ replacement, children, style }: Props) {
   }, [shouldHideContent]);
 
   if (shouldHideContent) {
-    return replacement;
+    return <>{replacement}</>;
   }
 
   return (
