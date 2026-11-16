@@ -22,6 +22,7 @@ type Props = PropsWithChildren & {};
 
 export function ContentGuardProvider({ children }: Props) {
   const ref = useRef<HTMLElement>(document.body);
+  const detectedExtensions = useBrowserExtensionDetector();
 
   const [hasFocus, setHasFocus] = useState(document.hasFocus());
   const [windowState, setWindowState] = useState<WindowState | null>(null);
@@ -41,12 +42,28 @@ export function ContentGuardProvider({ children }: Props) {
   const possibleToolWindowOpen =
     windowState?.fullscreen && windowState?.ratioDiff > 0.1;
 
+  const isExtensionDetected = useMemo(
+    () => Object.values(detectedExtensions).some(Boolean),
+    [detectedExtensions]
+  );
+
   const shouldHideContent = useMemo(() => {
     if (!isFullscreen || !hasFocus || isPageHidden || possibleToolWindowOpen) {
       return true;
     }
+    // Reading the guarded content through a translation layer defeats the guard,
+    // so a detected page translation hides the content as well.
+    if (detectedExtensions.google_translate) {
+      return true;
+    }
     return false;
-  }, [isFullscreen, hasFocus, isPageHidden, possibleToolWindowOpen]);
+  }, [
+    isFullscreen,
+    hasFocus,
+    isPageHidden,
+    possibleToolWindowOpen,
+    detectedExtensions,
+  ]);
 
   const captureWindowState = useCallback(() => {
     const dpr = window.devicePixelRatio;
@@ -276,20 +293,21 @@ export function ContentGuardProvider({ children }: Props) {
     addBrowserWindowEvent,
   ]);
 
-  useBrowserExtensionDetector();
-
   return (
     <contentGuardContext.Provider
       value={{
         requestFullscreen,
         isFullscreen: windowState?.fullscreen ?? false,
         shouldHideContent,
+        isExtensionDetected,
+        detectedExtensions,
         rootRef: ref,
         state: {
           eventHistory,
           hasFocus,
           windowState,
           possibleToolWindowOpen,
+          detectedExtensions,
         },
       }}
     >

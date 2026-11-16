@@ -66,7 +66,34 @@ A hook that provides access to the content guard functionality.
 
 - `requestFullscreen`: Function to request fullscreen mode
 - `isFullscreen`: Boolean indicating if the app is in fullscreen mode
+- `shouldHideContent`: Boolean indicating if the guarded content must be replaced
 - `isExtensionDetected`: Boolean indicating if a browser extension was detected
+- `detectedExtensions`: Object keyed by extension id with the latched detections
+- `state`: Low level state (`eventHistory`, `hasFocus`, `windowState`, `possibleToolWindowOpen`, `detectedExtensions`)
+
+## Detection
+
+Detection runs once on mount and then reacts to DOM changes (no polling) over
+`document.body`, so markers injected anywhere in the page are found.
+
+Detected markers:
+
+| Extension | Markers |
+| --- | --- |
+| Google Translate | `#gtx-trans`, `#gtx-anchor`, `#goog-gt-tt`, `.goog-te-balloon-frame`, `.skiptranslate`, and `<html class="translated-ltr">` / `translated-rtl` |
+| BrowserBetter Gemini | `#gemini_sidebar_cext_t` |
+| Aitopia ChatGPT | `#aitopia` |
+| Quick Translate | `#qt_translate_popup` |
+
+Rules:
+
+- Only element presence is checked. iframe `src` attributes are never read and the documents
+  inside iframes are never inspected.
+- Detections are latched: once an extension has been seen it stays detected for the lifetime of
+  the provider, even after its marker or the guarded content disappears.
+- A detected page translation adds `google_translate` to `detectedExtensions` and forces
+  `shouldHideContent`, so `ContentGuard` renders its `replacement`. Other extensions are reported
+  through `isExtensionDetected` but do not hide content on their own.
 
 ## License
 

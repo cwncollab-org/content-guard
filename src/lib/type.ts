@@ -55,3 +55,20 @@ export type BrowserFocusEvent = BrowserEvent & {
   type: "focus" | "blur";
   focus: boolean;
 };
+
+export type ExtensionId =
+  | "google_translate"
+  | "browserbetterio_gemini"
+  | "aitopia_chatgpt"
+  | "quick_translate";
+
+/** Extensions that have been detected. Detection is latched: once seen, a key stays true. */
+export type DetectedExtensions = Partial<Record<ExtensionId, boolean>>;
+
+export type ContentGuardState = {
+  eventHistory: BrowserEvent[];
+  hasFocus: boolean;
+  windowState: WindowState | null;
+  possibleToolWindowOpen: boolean | undefined;
+  detectedExtensions: DetectedExtensions;
+};
