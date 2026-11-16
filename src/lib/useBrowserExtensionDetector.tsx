@@ -56,7 +56,7 @@ function hasTranslatedDocumentClass() {
     return false;
   }
   return translatedRootClassNames.some((className) =>
-    documentElement.classList.contains(className)
+    documentElement.classList.contains(className),
   );
 }
 

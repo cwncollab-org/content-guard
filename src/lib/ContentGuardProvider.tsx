@@ -44,7 +44,7 @@ export function ContentGuardProvider({ children }: Props) {
 
   const isExtensionDetected = useMemo(
     () => Object.values(detectedExtensions).some(Boolean),
-    [detectedExtensions]
+    [detectedExtensions],
   );
 
   const shouldHideContent = useMemo(() => {
@@ -103,7 +103,7 @@ export function ContentGuardProvider({ children }: Props) {
         type,
       } as BrowserEvent);
     },
-    [pushBrowserEvent]
+    [pushBrowserEvent],
   );
 
   const addBrowserKeyEvent = useCallback(
@@ -114,7 +114,7 @@ export function ContentGuardProvider({ children }: Props) {
         key: key,
       } as BrowserKeyEvent);
     },
-    [pushBrowserEvent]
+    [pushBrowserEvent],
   );
 
   const addBrowserWindowEvent = useCallback(
@@ -126,7 +126,7 @@ export function ContentGuardProvider({ children }: Props) {
         | "beforeprint"
         | "afterprint"
         | "beforeunload",
-      windowState: WindowState
+      windowState: WindowState,
     ) => {
       pushBrowserEvent({
         timestamp: Date.now(),
@@ -134,7 +134,7 @@ export function ContentGuardProvider({ children }: Props) {
         windowState,
       } as BrowserWindowEvent);
     },
-    [pushBrowserEvent]
+    [pushBrowserEvent],
   );
 
   const addBrowserFocusEvent = useCallback(
@@ -145,7 +145,7 @@ export function ContentGuardProvider({ children }: Props) {
         focus,
       } as BrowserFocusEvent);
     },
-    [pushBrowserEvent]
+    [pushBrowserEvent],
   );
 
   useEffect(() => {
@@ -156,7 +156,7 @@ export function ContentGuardProvider({ children }: Props) {
       () => addBrowserEvent("beforeprint"),
       {
         signal: controller.signal,
-      }
+      },
     );
 
     window.addEventListener("afterprint", () => addBrowserEvent("afterprint"), {
@@ -168,7 +168,7 @@ export function ContentGuardProvider({ children }: Props) {
       () => addBrowserEvent("beforeunload"),
       {
         signal: controller.signal,
-      }
+      },
     );
 
     window.addEventListener(
@@ -179,7 +179,7 @@ export function ContentGuardProvider({ children }: Props) {
       },
       {
         signal: controller.signal,
-      }
+      },
     );
 
     window.addEventListener(
@@ -190,7 +190,7 @@ export function ContentGuardProvider({ children }: Props) {
       },
       {
         signal: controller.signal,
-      }
+      },
     );
 
     window.addEventListener(
@@ -201,7 +201,7 @@ export function ContentGuardProvider({ children }: Props) {
       },
       {
         signal: controller.signal,
-      }
+      },
     );
 
     document.addEventListener("copy", () => addBrowserEvent("copy"), {
@@ -218,7 +218,7 @@ export function ContentGuardProvider({ children }: Props) {
       (event) => addBrowserKeyEvent("keydown", event.key),
       {
         signal: controller.signal,
-      }
+      },
     );
 
     document.addEventListener(
@@ -229,7 +229,7 @@ export function ContentGuardProvider({ children }: Props) {
       },
       {
         signal: controller.signal,
-      }
+      },
     );
 
     document.addEventListener(
@@ -240,7 +240,7 @@ export function ContentGuardProvider({ children }: Props) {
       },
       {
         signal: controller.signal,
-      }
+      },
     );
 
     ref.current?.addEventListener(
@@ -249,7 +249,7 @@ export function ContentGuardProvider({ children }: Props) {
         e.preventDefault();
         addBrowserEvent("contextmenu");
       },
-      { signal: controller.signal }
+      { signal: controller.signal },
     );
 
     ref.current?.addEventListener(
@@ -262,7 +262,7 @@ export function ContentGuardProvider({ children }: Props) {
           e.preventDefault();
         }
       },
-      { signal: controller.signal }
+      { signal: controller.signal },
     );
 
     ref.current?.addEventListener(
@@ -278,7 +278,7 @@ export function ContentGuardProvider({ children }: Props) {
           }
         }
       },
-      { signal: controller.signal }
+      { signal: controller.signal },
     );
 
     captureWindowState();

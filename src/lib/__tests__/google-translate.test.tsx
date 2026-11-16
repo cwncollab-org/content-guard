@@ -3,8 +3,9 @@ import { createRoot, type Root } from "react-dom/client";
 import { ContentGuard, ContentGuardProvider, useContentGuard } from "../index";
 
 // Tells React that updates triggered from MutationObserver callbacks are wrapped in act().
-(globalThis as unknown as { IS_REACT_ACT_ENVIRONMENT: boolean })
-  .IS_REACT_ACT_ENVIRONMENT = true;
+(
+  globalThis as unknown as { IS_REACT_ACT_ENVIRONMENT: boolean }
+).IS_REACT_ACT_ENVIRONMENT = true;
 
 const HIDDEN_TEXT = "Content is hidden";
 const VISIBLE_TEXT = "Protected content";
@@ -137,7 +138,8 @@ describe("Google Translate detection", () => {
 
   it("ignores iframe src and markers inside iframes", async () => {
     const iframe = document.createElement("iframe");
-    iframe.src = "https://translate.googleapis.com/translate_static/banner.html";
+    iframe.src =
+      "https://translate.googleapis.com/translate_static/banner.html";
 
     await appendToBody(iframe);
 
