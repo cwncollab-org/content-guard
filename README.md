@@ -107,6 +107,8 @@ A component that wraps content that should only be visible in fullscreen mode.
 
 - `replacement`: React node to display when not in fullscreen mode
 - `style`: Optional CSS styles for the wrapper
+- `enabled`: Optional boolean, defaults to `true`. Set to `false` to always render the children
+  and skip the copy-protection styles, which is useful while developing.
 - `children`: Content to protect
 
 ### useContentGuard
