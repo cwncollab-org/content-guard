@@ -12,4 +12,4 @@
   },
   "include": ["src/lib"],
   "exclude": ["node_modules", "dist", "src/lib/__tests__"]
-} 
+}

@@ -11,16 +11,21 @@
     "type": "git",
     "url": "https://github.com/cwncollab-org/content-guard.git"
   },
+  "publishConfig": {
+    "registry": "https://cwncollab-619005574504.d.codeartifact.ap-southeast-1.amazonaws.com/npm/cwncollab/"
+  },
   "files": [
     "dist"
   ],
   "scripts": {
+    "clean": "node scripts/clean.cjs",
     "dev": "vite",
     "build": "tsc -b && vite build && npm run build:lib",
     "build:lib": "tsc -p tsconfig.lib.json",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prepare": "npm run build:lib",
+    "prepare": "npm run clean && npm run build:lib",
+    "publish:aws": "node scripts/publish-codeartifact.cjs",
     "test": "jest"
   },
   "peerDependencies": {
@@ -36,7 +41,7 @@
     "@eslint/js": "^9.19.0",
     "@fontsource/prompt": "^5.2.5",
     "@fontsource/sarabun": "^5.2.5",
-    "@mui/icons-material": "^6.4.8",
+    "@mui/icons-material": "^7.0.1",
     "@mui/material": "^7.0.1",
     "@types/jest": "^29.5.12",
     "@types/react": "^19.0.8",
