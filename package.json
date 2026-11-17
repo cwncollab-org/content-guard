@@ -26,6 +26,7 @@
     "preview": "vite preview",
     "prepare": "npm run clean && npm run build:lib",
     "publish:aws": "node scripts/publish-codeartifact.cjs",
+    "publish:aws:dry": "node scripts/publish-codeartifact.cjs --dry-run",
     "test": "jest"
   },
   "peerDependencies": {
